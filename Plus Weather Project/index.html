@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/c11c2388e6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway+Dots&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="weather-app-wrapper shadow">
+        <div class="weather-app">
+          <header>
+            <div class="row city-navigation">
+              <div class="col-3 city-item los-a">
+                <a href="#" class="cities" id="los-angeles">Los Angeles</a>
+              </div>
+              <div class="col-2 city-item">
+                <a href="#" class="cities" id="new-york">New York</a>
+              </div>
+              <div class="col-2 city-item">
+                <a href="#" class="cities" id="london">London</a>
+              </div>
+              <div class="col-2 city-item">
+                <a href="#" class="cities" id="paris">Paris</a>
+              </div>
+              <div class="col-2 city-item">
+                <a href="#" class="cities" id="tokyo">Tokyo</a>
+              </div>
+            </div>
+          </header>
+
+          <div class="row search-row">
+            <div class="col-7">
+              <form class="mt-3 mb-3 search-form" id="search-city-form">
+                <div class="row gx-0">
+                  <div class="col">
+                    <input
+                      type="text"
+                      placeholder="Enter city here..."
+                      class="form-control border-0"
+                      id="input-city"
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <div class="col-auto px-1">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block"
+                      id="search-button"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+
+                  <div class="col-auto">
+                    <button
+                      type="button"
+                      class="btn btn-secondary btn-block"
+                      id="location-btn"
+                    >
+                      <i class="fas fa-map-marker-alt me-1"> </i> Location
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-5 date-time mt-4">
+              <h6>
+                <span class="current-date" id="todays-date"
+                  >Friday, June 24th, 2022</span
+                >
+              </h6>
+              <h5 class="current-time">
+                <span id="todays-time">4:23</span> <span id="am-pm">PM</span>
+              </h5>
+            </div>
+          </div>
+
+          <div class="weather-display">
+            <div class="weather-display-main">
+              <div class="row">
+                <div class="col-12">
+                  <h1 class="mx-3 current-location">
+                    <span class="current-city" id="current-city-display"></span>
+                  </h1>
+                  <h3
+                    class="mx-3 weather-description"
+                    id="weather-description"
+                  ></h3>
+                </div>
+              </div>
+              <div class="row current-all">
+                <div class="col-6 mt-3">
+                  <div
+                    class="d-flex justify-content-center align-items-center current-city-temp"
+                  >
+                    <img
+                      src="images/weather-icons/animated/day.svg"
+                      alt="Sunny-Animated"
+                      class="sunny-icon"
+                      width="150"
+                    />
+                    <div class="current-weather-temp">
+                      <h2 class="current-temp">
+                        <span id="main-degrees"></span>º
+                      </h2>
+                      <span class="units">
+                        <a href="#" id="celsius-link">°C</a>|<a
+                          href="#"
+                          id="fahrenheit-link"
+                          class="inactive"
+                          >ºF</a
+                        >
+                      </span>
+
+                      <p class="current-high-low" id="main-high-low">
+                        <strong>º</strong> | ºC
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 weather-details mb-5">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <ul class="weather-details">
+                      <li class="humidity">
+                        Humidity: <span id="humidity"></span>%
+                      </li>
+                      <li class="pressure">
+                        Pressure: <span id="pressure"></span> hPa
+                      </li>
+                      <li class="wind-speed">
+                        Wind: <span id="wind-speed"></span> km/h
+                      </li>
+                      <li class="feels-like-temp">
+                        Feels Like: <span id="feels-like-temp"></span>ºC
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <h4 class="mx-3 mt-2 update-text">
+                  Last updated: Yesterday at 4:20 PM
+                </h4>
+              </div>
+              <hr />
+
+              <div class="row five-day-forecast">
+                <div class="col-2">
+                  <div class="forecast-day">Saturday</div>
+                  <div class="forecast-icon">
+                    <img
+                      src="images/weather-icons/animated/cloudy-day-1.svg"
+                      alt="sunny-icon"
+                    />
+                  </div>
+                  <div class="forecast-temp-high">
+                    30º<span class="degree-type">C</span>
+                  </div>
+                  <div class="forecast-temp-low">
+                    17º<span class="degree-type">C</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="forecast-day">Sunday</div>
+                  <div class="forecast-icon">
+                    <img
+                      src="images/weather-icons/animated/day.svg"
+                      alt="sunny-icon"
+                    />
+                  </div>
+                  <div class="forecast-temp-high">
+                    31º<span class="degree-type">C</span>
+                  </div>
+                  <div class="forecast-temp-low">
+                    18º<span class="degree-type">C</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="forecast-day">Monday</div>
+                  <div class="forecast-icon">
+                    <img
+                      src="images/weather-icons/animated/day.svg"
+                      alt="sunny-icon"
+                    />
+                  </div>
+                  <div class="forecast-temp-high">
+                    32º<span class="degree-type">C</span>
+                  </div>
+                  <div class="forecast-temp-low">
+                    19º<span class="degree-type">C</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="forecast-day">Tuesday</div>
+                  <div class="forecast-icon">
+                    <img
+                      src="images/weather-icons/animated/day.svg"
+                      alt="sunny-icon"
+                    />
+                  </div>
+                  <div class="forecast-temp-high">
+                    32º<span class="degree-type">C</span>
+                  </div>
+                  <div class="forecast-temp-low">
+                    20º<span class="degree-type">C</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="forecast-day">Wednesday</div>
+                  <div class="forecast-icon">
+                    <img
+                      src="images/weather-icons/animated/day.svg"
+                      alt="sunny-icon"
+                    />
+                  </div>
+                  <div class="forecast-temp-high">
+                    29º<span class="degree-type">C</span>
+                  </div>
+                  <div class="forecast-temp-low">
+                    19º<span class="degree-type">C</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="forecast-day">Thursday</div>
+                  <div class="forecast-icon">
+                    <img
+                      src="images/weather-icons/animated/day.svg"
+                      alt="sunny-icon"
+                    />
+                  </div>
+                  <div class="forecast-temp-high">
+                    28º<span class="degree-type">C</span>
+                  </div>
+                  <div class="forecast-temp-low">
+                    18º<span class="degree-type">C</span>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex justify-content-center">
+                    <span class="quote"
+                      >🥵 "It's getting hot in here! Don't forget your 🕶 🧴!"
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <hr />
+
+              <div class="audio-player text-center row">
+                <div class="col-6 mt-2 d-flex justify-content-end">
+                  <p class="song-info">
+                    <strong>"Cruel Summer"</strong> - Bananarama
+                  </p>
+                </div>
+                <div class="col-6 d-flex justify-content-start">
+                  <ul
+                    class="controls list-group list-group-horizontal-sm d-flex justify-content-center"
+                  >
+                    <li class="list-group-item">
+                      <a href=""><i class="fa fa-backward fa-2x"></i></a>
+                    </li>
+                    <li class="list-group-item">
+                      <a href=""><i class="fa fa-play fa-2x"></i></a>
+                    </li>
+                    <li class="list-group-item">
+                      <a href=""><i class="fa fa-pause fa-2x"></i></a>
+                    </li>
+                    <li class="list-group-item">
+                      <a href=""><i class="fa fa-stop fa-2x"></i></a>
+                    </li>
+                    <li class="list-group-item">
+                      <a href=""><i class="fa fa-forward fa-2x"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ocean">
+                <div class="wave"></div>
+                <div class="wave"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ocean">
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+    <script src="src/index.js"></script>
+  </body>
+</html>
