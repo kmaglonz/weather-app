@@ -198,5 +198,6 @@ li.list-group-item {
 }
 
 .code-tag {
-  margin-left: 110px;
+  max-width: 610px;
+  margin: 30px auto;
 }
