@@ -91,6 +91,16 @@ function displayCityWeather(response) {
   document.querySelector("#feels-like-temp").innerHTML = Math.round(
     response.data.main.feels_like
   );
+  document
+    .querySelector("#icon")
+    .setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+
+  document
+    .querySelector("#icon")
+    .setAttribute("alt", response.data.weather[0].description);
 }
 
 function searchCity(city) {
