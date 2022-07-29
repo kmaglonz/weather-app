@@ -41,7 +41,6 @@ h4 {
 div.city-item {
   display: inline;
   border-right: 1px solid dimgray;
-  font-family: "Jost", sans-serif;
   font-weight: 200;
   font-size: 15px;
   margin-bottom: 4px;
@@ -70,7 +69,7 @@ a.cities:hover {
 
 form.search-form {
   display: block;
-  font-family: "Jost", sans-serif;
+
   font-weight: lighter;
   max-width: 450px;
   margin-left: auto;
@@ -112,13 +111,14 @@ h6 {
 
 h1.current-location {
   margin-bottom: 0px;
-  font-family: "Jost", sans-serif;
+
   text-transform: uppercase;
   filter: drop-shadow(2px 4px 1px #6fcad3);
 }
 
 h3.weather-description {
   filter: drop-shadow(2px 4px 1px #6fcad3);
+  text-transform: capitalize;
 }
 
 h2.current-temp {

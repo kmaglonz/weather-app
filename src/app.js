@@ -73,7 +73,7 @@ function displayCityWeather(response) {
     response.data.main.temp
   );
   document.querySelector("#weather-description").innerHTML =
-    response.data.weather[0].main;
+    response.data.weather[0].description;
   document.querySelector("#main-high-low").innerHTML = `<strong>${Math.round(
     response.data.main.temp_max
   )}º</strong> | ${Math.round(response.data.main.temp_min)}ºC`;
