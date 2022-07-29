@@ -33,6 +33,7 @@ function formatDate(date) {
 
   let currentYear = date.getFullYear();
 
+  updateDay.innerHTML = ` ${currentDay}`;
   return `${currentDay}, ${currentMonth} ${currentDate}, ${currentYear}`;
 }
 
@@ -49,10 +50,12 @@ function formatTime(time) {
 
   if (hour >= 12) {
     amPm.innerHTML = `PM`;
+    updateAmPm.innerHTML = `PM`;
   } else {
     amPm.innerHTML = `AM`;
+    updateAmPm.innerHTML = `AM`;
   }
-
+  updateTime.innerHTML = `${hour}:${minutes}`;
   return `${hour}:${minutes}`;
 }
 
@@ -60,6 +63,9 @@ let currentDay = new Date();
 let todaysDate = document.querySelector("#todays-date");
 let todaysTime = document.querySelector("#todays-time");
 let amPm = document.querySelector("#am-pm");
+let updateDay = document.querySelector("#update-day");
+let updateTime = document.querySelector("#update-time");
+let updateAmPm = document.querySelector("#update-am-pm");
 
 todaysDate.innerHTML = formatDate(currentDay);
 todaysTime.innerHTML = formatTime(currentDay);
