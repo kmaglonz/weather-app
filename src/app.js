@@ -85,13 +85,24 @@ function displayCityWeather(response) {
     response.data.name;
   document.querySelector("#weather-description").innerHTML =
     response.data.weather[0].description;
+
+  document
+    .querySelector("#icon")
+    .setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+  document
+    .querySelector("#icon")
+    .setAttribute("alt", response.data.weather[0].description);
+
   document.querySelector("#main-degrees").innerHTML = Math.round(
     response.data.main.temp
   );
-
   document.querySelector("#main-high-low").innerHTML = `<strong>${Math.round(
     response.data.main.temp_max
   )}º</strong> | ${Math.round(response.data.main.temp_min)}ºC`;
+
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#pressure").innerHTML = response.data.main.pressure;
   document.querySelector("#wind-speed").innerHTML = Math.round(
@@ -100,16 +111,6 @@ function displayCityWeather(response) {
   document.querySelector("#feels-like-temp").innerHTML = Math.round(
     response.data.main.feels_like
   );
-  document
-    .querySelector("#icon")
-    .setAttribute(
-      "src",
-      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    );
-
-  document
-    .querySelector("#icon")
-    .setAttribute("alt", response.data.weather[0].description);
 }
 
 function searchCity(city) {
