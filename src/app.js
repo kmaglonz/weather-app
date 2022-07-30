@@ -118,10 +118,10 @@ function handleSubmit(event) {
   searchCity(city);
 }
 
+searchCity("Los Angeles");
+
 let searchForm = document.querySelector("#search-city-form");
 searchForm.addEventListener("submit", handleSubmit);
-
-searchCity("Los Angeles");
 
 // Bonus Feature: Celsius & Fahrenheit Display//
 function showCelsiusTemp(event) {

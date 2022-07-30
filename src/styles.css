@@ -119,6 +119,9 @@ h1.current-location {
 
 h3.weather-description {
   filter: drop-shadow(2px 4px 1px #6fcad3);
+}
+
+h3.weather-description::first-letter {
   text-transform: capitalize;
 }
 
