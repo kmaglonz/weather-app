@@ -169,18 +169,19 @@ ul.weather-details {
   padding: 10px;
 }
 
-.forecast-day,
-.forecast-temp-high,
-.forecast-temp-low {
+.six-day-forecast {
   font-size: 15px;
   text-align: center;
 }
 
-div .forecast-temp-high {
+div.forecast-day {
+  font-weight: 500;
+}
+div .forecast-high-temp {
   font-weight: bold;
 }
 
-div .forecast-temp-low {
+div .forecast-low-temp {
   color: dimgray;
 }
 
