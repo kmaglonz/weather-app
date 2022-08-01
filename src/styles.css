@@ -141,13 +141,13 @@ span.units a {
   text-decoration: none;
 }
 
-span.units a:hover {
-  cursor: pointer;
-  color: #6fcad3;
+span a.active {
+  color: dimgray;
+  cursor: default;
 }
 
-span a.inactive {
-  color: dimgray;
+span a.active:hover {
+  cursor: default;
 }
 
 p.current-high-low {

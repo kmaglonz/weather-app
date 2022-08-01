@@ -96,12 +96,15 @@ function displayCityWeather(response) {
     .querySelector("#icon")
     .setAttribute("alt", response.data.weather[0].description);
 
-  document.querySelector("#main-degrees").innerHTML = Math.round(
-    response.data.main.temp
-  );
-  document.querySelector("#main-high-low").innerHTML = `<strong>${Math.round(
-    response.data.main.temp_max
-  )}º</strong> | ${Math.round(response.data.main.temp_min)}ºC`;
+  celsiusTemp = Math.round(response.data.main.temp);
+  currentHighTemp = Math.round(response.data.main.temp_max);
+  currentLowTemp = Math.round(response.data.main.temp_min);
+
+  document.querySelector("#main-degrees").innerHTML = celsiusTemp;
+
+  document.querySelector(
+    "#main-high-low"
+  ).innerHTML = `<strong>${currentHighTemp}º</strong> | ${currentLowTemp}ºC`;
 
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#pressure").innerHTML = response.data.main.pressure;
@@ -127,8 +130,6 @@ function handleSubmit(event) {
   let city = document.querySelector("#input-city").value;
   searchCity(city);
 }
-
-searchCity("Los Angeles");
 
 let searchForm = document.querySelector("#search-city-form");
 searchForm.addEventListener("submit", handleSubmit);
@@ -225,56 +226,38 @@ todaysDate.innerHTML = formatDate(currentDay);
 todaysTime.innerHTML = formatTime(currentDay);
 
 // Feature #5: Celsius & Fahrenheit Display//
-function showCelsiusTemp(event) {
+
+function displayFahrenheitTemp(event) {
   event.preventDefault();
-  let inputCity = document.querySelector("#input-city");
-  let celsiusDisplay = document.querySelector("#main-degrees");
-  let highLowTemp = document.querySelector("#main-high-low");
-  let apiKey = "2418968f77a7b86c4faf9f62831e5df3";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity.value}`;
-  let units = "metric";
-  celsiusLink.classList.remove("inactive");
-  fahrenheitLink.classList.add("inactive");
-
-  function getCelsius(response) {
-    let celsiusTemp = Math.round(response.data.main.temp);
-    let currentHigh = Math.round(response.data.main.temp_max);
-    let currentLow = Math.round(response.data.main.temp_min);
-    celsiusDisplay.innerHTML = Math.round(celsiusTemp);
-    highLowTemp.innerHTML = `<strong>${currentHigh}º</strong> | ${currentLow}ºC`;
-  }
-
-  axios.get(`${apiUrl}&units=${units}&appid=${apiKey}`).then(getCelsius);
+  let mainTemp = document.querySelector("#main-degrees");
+  let mainHighLowTemp = document.querySelector("#main-high-low");
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  let fahrenheitTemp = (celsiusTemp * 9) / 5 + 32;
+  mainTemp.innerHTML = Math.round(fahrenheitTemp);
+  mainHighLowTemp.innerHTML = `<strong>${Math.round(
+    (currentHighTemp * 9) / 5 + 32
+  )}º</strong> | ${Math.round((currentLowTemp * 9) / 5 + 32)}ºC`;
 }
 
-function showFahrenheitTemp(event) {
+function displayCelsiusTemp(event) {
   event.preventDefault();
-  let inputCity = document.querySelector("#input-city");
-  let celsiusDisplay = document.querySelector("#main-degrees");
-  let highLowTemp = document.querySelector("#main-high-low");
-
-  let apiKey = "2418968f77a7b86c4faf9f62831e5df3";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity.value}`;
-  let units = "metric";
-  celsiusLink.classList.add("inactive");
-  fahrenheitLink.classList.remove("inactive");
-
-  function getFahrenheit(response) {
-    let celsiusTemp = Math.round(response.data.main.temp);
-    let celsiusHigh = Math.round(response.data.main.temp_max);
-    let celsiusLow = Math.round(response.data.main.temp_min);
-    let fahrenheitTemp = Math.round(celsiusTemp * 1.8 + 32);
-    let fahrenheitHigh = Math.round(celsiusHigh * 1.8 + 32);
-    let fahrenheitLow = Math.round(celsiusLow * 1.8 + 32);
-    celsiusDisplay.innerHTML = fahrenheitTemp;
-    highLowTemp.innerHTML = `<strong>${fahrenheitHigh}º</strong> | ${fahrenheitLow}ºF`;
-  }
-
-  axios.get(`${apiUrl}&units=${units}&appid=${apiKey}`).then(getFahrenheit);
+  let mainTemp = document.querySelector("#main-degrees");
+  let mainHighLowTemp = document.querySelector("#main-high-low");
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  mainTemp.innerHTML = celsiusTemp;
+  mainHighLowTemp.innerHTML = `<strong>${currentHighTemp}º</strong> | ${currentLowTemp}ºC`;
 }
 
-let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", showCelsiusTemp);
+let celsiusTemp = null;
+let currentHighTemp = null;
+let currentLowTemp = null;
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", showFahrenheitTemp);
+fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
+
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displayCelsiusTemp);
+
+searchCity("Los Angeles");
