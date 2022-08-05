@@ -78,7 +78,41 @@ function getTokyo(event) {
 let tokyoLink = document.querySelector("#tokyo");
 tokyoLink.addEventListener("click", getTokyo);
 
-// Feature #2: Search Engine - Weather Display  //
+// Feature #2: Search Engine - Weather Display/ Forecast  //
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class= "row">`;
+  let days = [
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+  ];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      ` 
+       <div class="col-2">
+           <div class="forecast-day">${day}</div>
+           <div class="forecast-icon">
+              <img src="images/weather-icons/animated/cloudy-day-1.svg" alt="sunny-icon" />
+           </div>
+           <div class="forecast-high-temp">
+              30º<span class="degree-type">C</span>
+          </div>
+          <div class="forecast-low-temp">
+              17º<span class="degree-type">C</span>
+          </div>
+        </div>           
+  `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
 
 function displayCityWeather(response) {
   document.querySelector("#current-city-display").innerHTML =
@@ -261,3 +295,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemp);
 
 searchCity("Los Angeles");
+displayForecast();
