@@ -79,36 +79,53 @@ let tokyoLink = document.querySelector("#tokyo");
 tokyoLink.addEventListener("click", getTokyo);
 
 // Feature #2: Search Engine - Weather Display/ Forecast  //
-function displayForecast(response) {
-  console.log(response.data.daily);
-  let forecastElement = document.querySelector("#forecast");
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
 
-  let forecastHTML = `<div class= "row">`;
+  let day = date.getDay();
   let days = [
-    "Saturday",
     "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
+    "Friday",
+    "Saturday",
   ];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      ` 
+  return days[day];
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class= "row">`;
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        ` 
        <div class="col-2">
-           <div class="forecast-day">${day}</div>
+           <div class="forecast-day">${formatDay(forecastDay.dt)}</div>
            <div class="forecast-icon">
-              <img src="images/weather-icons/animated/cloudy-day-1.svg" alt="sunny-icon" />
+              <img src="http://openweathermap.org/img/wn/${
+                forecastDay.weather[0].icon
+              }@2x.png" class="forecast-icon" width="64" />
            </div>
            <div class="forecast-high-temp">
-              30º<span class="degree-type">C</span>
+              ${Math.round(
+                forecastDay.temp.max
+              )}º<span class="degree-type">C</span>
           </div>
           <div class="forecast-low-temp">
-              17º<span class="degree-type">C</span>
+              ${Math.round(
+                forecastDay.temp.max
+              )}º<span class="degree-type">C</span>
           </div>
         </div>           
   `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -120,7 +137,6 @@ function getForecast(coordinates) {
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
 
-  console.log(apiUrl);
   axios.get(apiUrl).then(displayForecast);
 }
 
@@ -151,7 +167,7 @@ function displayCityWeather(response) {
   ).innerHTML = `<strong>${currentHighTemp}º</strong> | ${currentLowTemp}ºC`;
 
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-  document.querySelector("#pressure").innerHTML = response.data.main.pressure;
+
   document.querySelector("#wind-speed").innerHTML = Math.round(
     response.data.wind.speed
   );
@@ -283,7 +299,7 @@ function displayFahrenheitTemp(event) {
   mainTemp.innerHTML = Math.round(fahrenheitTemp);
   mainHighLowTemp.innerHTML = `<strong>${Math.round(
     (currentHighTemp * 9) / 5 + 32
-  )}º</strong> | ${Math.round((currentLowTemp * 9) / 5 + 32)}ºC`;
+  )}º</strong> | ${Math.round((currentLowTemp * 9) / 5 + 32)}ºF`;
 }
 
 function displayCelsiusTemp(event) {
