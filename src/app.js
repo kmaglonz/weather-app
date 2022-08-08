@@ -96,13 +96,13 @@ function formatDay(timestamp) {
 }
 
 function displayForecast(response) {
-  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
-
+  forecast = response.data.daily;
+  forecastElement.innerHTML = null;
   let forecastHTML = `<div class= "row">`;
 
   forecast.forEach(function (forecastDay, index) {
-    if (index < 6) {
+    if (index < 7 && index > 0) {
       forecastHTML =
         forecastHTML +
         ` 
@@ -113,15 +113,15 @@ function displayForecast(response) {
                 forecastDay.weather[0].icon
               }@2x.png" class="forecast-icon" width="64" />
            </div>
-           <div class="forecast-high-temp">
+           <div class="forecast-high-temp" id="forecast-high-temp">
               ${Math.round(
                 forecastDay.temp.max
-              )}º<span class="degree-type">C</span>
+              )}º<span class="degree-type" id="degree-unit-max">C</span>
           </div>
-          <div class="forecast-low-temp">
+          <div class="forecast-low-temp" id="forecast-low-temp">
               ${Math.round(
-                forecastDay.temp.max
-              )}º<span class="degree-type">C</span>
+                forecastDay.temp.min
+              )}º<span class="degree-type" id="degree-unit-min">C</span>
           </div>
         </div>           
   `;
@@ -311,10 +311,11 @@ function displayCelsiusTemp(event) {
   mainTemp.innerHTML = celsiusTemp;
   mainHighLowTemp.innerHTML = `<strong>${currentHighTemp}º</strong> | ${currentLowTemp}ºC`;
 }
-
+//Global Variables//
 let celsiusTemp = null;
 let currentHighTemp = null;
 let currentLowTemp = null;
+let forecast = null;
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
